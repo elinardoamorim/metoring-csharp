@@ -1,6 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MetoringCsharp.Challenge.TaxCoupon;
+using MetoringCsharp.Fundamentals;
+using MetoringCsharp.Collection.Enum;
+using ProjetoCSharp;
+using System;
+using MetoringCsharp.Collection.List;
+using MetoringCsharp.Collection.Array;
 
 namespace MetoringCsharp
 {
@@ -8,7 +12,55 @@ namespace MetoringCsharp
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var center = new ExerciseCenter(new Dictionary<string, Action>() {
+                {"Calculator - Fundamentals", CalculatorExecute.Execute},
+                {"Tax Coupon - Challenge", TaxCouponExecute.Execute},
+                {"Enum - Collections", DayWeekExecute.Execute },
+                {"List - Collections", BuyListExecute.Execute },
+                {"ArrayAverage - Collections", ArrayAverageExecute.Execute }
+
+            });
+
+            center.SelectAndRun();
+            //var accountCorrent = new AccountCorrent("Gabriel", 0536, 412578, 1200.01);
+            //var accountCorrent = new AccountCorrent();
+            //AccountDeposit accountDeposit = new AccountDeposit();
+
+            //accountDeposit.balance = 10.0;
+
+            //Console.WriteLine(accountDeposit.balance);
+            //Console.WriteLine(accountCorrent.balance);
+
+            //accountCorrent.nameClient = "Gabriel";
+            //accountCorrent.agency = 0536;
+            //accountCorrent.account = 412578;
+            //accountCorrent.balance = 1200.01;
+
+            //Calculator calculator = new Calculator(23, 55);
+
+            //Console.WriteLine(calculator.Result);
+            
+            //double sum = calculator.Sum(25, 45);
+            //Console.WriteLine("Resultado da soma: " + sum);
+
+            //double subtract = calculator.Subtract(25, 45);
+            //Console.WriteLine("Resultado da subtração: " + subtract);
+
+            //double multiplication = calculator.Multiplication(25, 45);
+            //Console.WriteLine("Resultado da multiplicação: " + multiplication);
+
+            //double division = calculator.Division(25, 45);
+            //Console.WriteLine("Resultado da divisão: " + division);
+
+
+            //calculator.ValueFirst = 15;
+            //calculator.ValueSecond = 13;
+
+            //Result = calculator.Sum();
+            //Console.WriteLine(Result);
+
+
+
         }
     }
 }
