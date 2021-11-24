@@ -10,26 +10,46 @@ namespace MetoringCsharp.Challenge.AverageSalary
     {
         public static void Execute()
         {
-            decimal salaryFirst, salarySecond;
-            string nameFirst, nameSecond;
+            bool programFinal= true;
+            decimal totalSalary = 0;
+
+            List<Employee> employees = new List<Employee>();
 
 
-            Console.WriteLine("Insira o nome do primeiro funcionário: ");
-            nameFirst = Console.ReadLine();
+            while (programFinal)
+            {
+                Console.WriteLine("Quer adicionar um novo funcionário? \"S\" para CONTINUAR e \"N\" para SAIR");
+                string isContinue = Console.ReadLine();
 
-            Console.WriteLine($"Insira o salário do {nameFirst}: ");
-            salaryFirst = Convert.ToDecimal(Console.ReadLine());
+                if (isContinue.ToUpper().Equals("S"))
+                {
+                    Console.WriteLine("Insira o nome do funcionário: ");
+                    string nameEmployee = Console.ReadLine();
 
-            Console.WriteLine("Insira o nome do segundo funcionário: ");
-            nameSecond = Console.ReadLine();
+                    Console.WriteLine($"Insira o salário do {nameEmployee}: ");
+                    decimal salaryEmployee = Convert.ToDecimal(Console.ReadLine());
 
-            Console.WriteLine($"Insira o salário do {nameFirst}: ");
-            salarySecond = Convert.ToDecimal(Console.ReadLine());
+                    Employee employee = new Employee(name: nameEmployee, salary: salaryEmployee);
 
-            decimal averageSalary = (salaryFirst + salarySecond) / 2;
+                    employees.Add(employee);
+                }
+                else if(isContinue.ToUpper().Equals("N"))
+                {
+                    programFinal = false;
+                }
+            }
 
-            Console.WriteLine();
-            Console.WriteLine($"Média salarial é R$ {averageSalary.ToString("N2")}");
+            employees.ForEach(employee => {
+                
+                Console.WriteLine(employee);
+
+                totalSalary += employee.Salary;
+            });
+
+            totalSalary = totalSalary / employees.Count;
+
+            Console.WriteLine($"Média Salarial é de R$ {totalSalary.ToString("N2")}");
+
         }
     }
 }
