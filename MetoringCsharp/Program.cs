@@ -5,6 +5,11 @@ using ProjetoCSharp;
 using System;
 using MetoringCsharp.Collection.List;
 using MetoringCsharp.Collection.Array;
+using MetoringCsharp.Collection.ArrayListPractice;
+using MetoringCsharp.Challenge.CheckOlderPerson;
+using MetoringCsharp.Challenge.AverageSalary;
+using MetoringCsharp.Challenge.Rectangle;
+using MetoringCsharp.Fundamentals.Interface;
 
 namespace MetoringCsharp
 {
@@ -17,7 +22,13 @@ namespace MetoringCsharp
                 {"Tax Coupon - Challenge", TaxCouponExecute.Execute},
                 {"Enum - Collections", DayWeekExecute.Execute },
                 {"List - Collections", BuyListExecute.Execute },
-                {"ArrayAverage - Collections", ArrayAverageExecute.Execute }
+                {"ArrayAverage - Collections", ArrayAverageExecute.Execute },
+                {"ArrayList - Collections", AverageExecute.Execute },
+                {"Converter Moeda - Fundametals", CurrencyConverter.Execute },
+                {"Verificar pessoa velha - Challenge", PersonExecute.Execute },
+                {"Média Salarial - Challenge", AverageSalary.Execute },
+                {"Retângulo - Challenge", RectangleExecute.Execute },
+                {"Implement Interface - Fundamentals", InterfaceExecute.Execute }
 
             });
 
