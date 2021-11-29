@@ -11,6 +11,8 @@ using MetoringCsharp.Challenge.AverageSalary;
 using MetoringCsharp.Challenge.Rectangle;
 using MetoringCsharp.Fundamentals.Interface;
 using MetoringCsharp.Fundamentals.Abstract;
+using MetoringCsharp.Fundamentals.ErrorTratament;
+using MetoringCsharp.Fundamentals.Inheritance;
 
 namespace MetoringCsharp
 {
@@ -31,6 +33,9 @@ namespace MetoringCsharp
                 {"Retângulo - Challenge", RectangleExecute.Execute },
                 {"Implement Interface - Fundamentals", InterfaceExecute.Execute },
                 {"Implement Class Abstract - Fundamentals", AbstractExecute.Execute },
+                {"Implement Error Tratament - Fundamentals", ErrorTratament.Execute },
+                {"Implement Inheritance - Fundamentals", InheritanceExecute.Execute }
+
 
 
             });
