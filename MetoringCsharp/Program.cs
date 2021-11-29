@@ -10,6 +10,7 @@ using MetoringCsharp.Challenge.CheckOlderPerson;
 using MetoringCsharp.Challenge.AverageSalary;
 using MetoringCsharp.Challenge.Rectangle;
 using MetoringCsharp.Fundamentals.Interface;
+using MetoringCsharp.Fundamentals.Abstract;
 
 namespace MetoringCsharp
 {
@@ -28,7 +29,9 @@ namespace MetoringCsharp
                 {"Verificar pessoa velha - Challenge", PersonExecute.Execute },
                 {"Média Salarial - Challenge", AverageSalary.Execute },
                 {"Retângulo - Challenge", RectangleExecute.Execute },
-                {"Implement Interface - Fundamentals", InterfaceExecute.Execute }
+                {"Implement Interface - Fundamentals", InterfaceExecute.Execute },
+                {"Implement Class Abstract - Fundamentals", AbstractExecute.Execute },
+
 
             });
 
