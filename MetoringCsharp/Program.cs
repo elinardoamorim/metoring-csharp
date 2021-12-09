@@ -13,6 +13,12 @@ using MetoringCsharp.Fundamentals.Interface;
 using MetoringCsharp.Fundamentals.Abstract;
 using MetoringCsharp.Fundamentals.ErrorTratament;
 using MetoringCsharp.Fundamentals.Inheritance;
+using MetoringCsharp.Fundamentals.Heritage;
+using MetoringCsharp.Fundamentals.DateETime;
+using MentoringCSharp.Fundamentals.Exceptions;
+using MetoringCsharp.Fundamentals.Exceptions;
+using MetoringCsharp.Challenge.Inventory;
+using MetoringCsharp.Challenge.Consultancy;
 
 namespace MetoringCsharp
 {
@@ -34,13 +40,26 @@ namespace MetoringCsharp
                 {"Implement Interface - Fundamentals", InterfaceExecute.Execute },
                 {"Implement Class Abstract - Fundamentals", AbstractExecute.Execute },
                 {"Implement Error Tratament - Fundamentals", ErrorTratament.Execute },
-                {"Implement Inheritance - Fundamentals", InheritanceExecute.Execute }
+                {"Implement Inheritance - Fundamentals", InheritanceExecute.Execute },
+                {"Implement Heritage - Fundamentals", HeritageMain.Execute },
+                {"Implement DateTime - Fundamentals", DateTimeExecute.Execute },
+                {"Implement Exceptions - Fundamentals", ExceptionMain.Execute },
+                {"Implement ProductDesafio - Challenge", ProductMain.Execute },
+                {"Implement CalculationService - Challenge", CalculationMain.Execute }
+
+
+
+
+
+
 
 
 
             });
-
             center.SelectAndRun();
+            
+
+            
             //var accountCorrent = new AccountCorrent("Gabriel", 0536, 412578, 1200.01);
             //var accountCorrent = new AccountCorrent();
             //AccountDeposit accountDeposit = new AccountDeposit();

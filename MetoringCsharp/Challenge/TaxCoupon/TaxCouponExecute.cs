@@ -11,10 +11,10 @@ namespace MetoringCsharp.Challenge.TaxCoupon
         public static void Execute()
         {
 
-            List<ItemProducts> products = new List<ItemProducts>();
+            List<ItemProducts> itemsProducts = new List<ItemProducts>();
 
             string nameProduct;
-            decimal price, discount, amount, result;
+            decimal price, discount, amount;
             bool programFinal = true;
             decimal totalPrice = 0;
 
@@ -24,7 +24,7 @@ namespace MetoringCsharp.Challenge.TaxCoupon
                 string programYesOrExit = Console.ReadLine();
                 Console.WriteLine();
 
-                if (programYesOrExit == "sim" || programYesOrExit == "Sim" || programYesOrExit == "SIM")
+                if (programYesOrExit.ToLower() == "sim")
                 {
                     Console.WriteLine("Digite nome do produto: ");
                     nameProduct = Console.ReadLine();
@@ -38,11 +38,18 @@ namespace MetoringCsharp.Challenge.TaxCoupon
                     Console.WriteLine("Digite a quantide do produto: ");
                     amount = Convert.ToDecimal(Console.ReadLine());
 
-                    ItemProducts itemProducts = new ItemProducts();
-                    products.Add(itemProducts.AddProduct(nameProduct, price, discount, amount));
+                    Product product = new Product(name: nameProduct, price: price, discount: discount);
 
+                    ItemProducts itemProduct = new ItemProducts()
+                    {
+                        Product = product,
+                        amount = amount
+                    };
+
+                    itemsProducts.Add(itemProduct);
+                    //itemProduct.AddProduct(nameProduct, price, discount, amount)
                 }
-                else if (programYesOrExit.Equals("exit") || programYesOrExit == "Exit" || programYesOrExit == "EXIT")
+                else if (programYesOrExit.ToUpper() == "EXIT")
                 {
                     programFinal = false;
                 }
@@ -50,7 +57,18 @@ namespace MetoringCsharp.Challenge.TaxCoupon
             }
             while (programFinal);
 
-            foreach (ItemProducts itemProduct in products)
+            //foreach (ItemProducts itemProduct in itemsProducts)
+            //{
+            //    Console.WriteLine($"Produto: {itemProduct.Product.Name} " +
+            //    $"\nPreço/Unidade: {itemProduct.Product.Price}" +
+            //    $"\nQuantidade: {itemProduct.amount}" +
+            //    $"\nValor total com desconto: {itemProduct.TotalPrice(itemProduct.Product.Price, itemProduct.Product.Discount, itemProduct.amount).ToString("N2")}");
+            //    Console.WriteLine();
+
+            //    totalPrice += itemProduct.TotalPrice(itemProduct.Product.Price, itemProduct.Product.Discount, itemProduct.amount);
+            //}
+
+            itemsProducts.ForEach(itemProduct =>
             {
                 Console.WriteLine($"Produto: {itemProduct.Product.Name} " +
                 $"\nPreço/Unidade: {itemProduct.Product.Price}" +
@@ -59,7 +77,7 @@ namespace MetoringCsharp.Challenge.TaxCoupon
                 Console.WriteLine();
 
                 totalPrice += itemProduct.TotalPrice(itemProduct.Product.Price, itemProduct.Product.Discount, itemProduct.amount);
-            }
+            });
 
             Console.WriteLine($"Valor total da compra com desconto: {totalPrice.ToString("N2")}");
         }

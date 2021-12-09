@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MetoringCsharp.Fundamentals.Interface
 {
-    public class EmployeeReadjustment : IReadjustment
+    public class Employee : IReadjustmentSalary
     {
         public string name;
         public double salary;
 
-        public void Readjustment()
+        public void CalculatorReajustment()
         {
             salary = salary * 1.50;
         }

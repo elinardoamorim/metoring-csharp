@@ -10,7 +10,7 @@ namespace MetoringCsharp.Fundamentals.Interface
     {
         public static void Execute()
         {
-            EmployeeReadjustment employee = new EmployeeReadjustment();
+            Employee employee = new Employee();
 
             employee.name = "Felipe";
             employee.salary = 2500.00;
@@ -19,7 +19,7 @@ namespace MetoringCsharp.Fundamentals.Interface
             Console.WriteLine($"Funcionário: {employee.name}");
             Console.WriteLine($"Sálario: {employee.salary}");
 
-            employee.Readjustment();
+            employee.CalculatorReajustment();
 
             Console.WriteLine("\nDepois do Reajuste");
             Console.WriteLine($"Funcionário: {employee.name}");

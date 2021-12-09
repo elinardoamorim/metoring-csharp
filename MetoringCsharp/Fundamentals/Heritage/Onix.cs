@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetoringCsharp.Fundamentals.Interface
+namespace MetoringCsharp.Fundamentals.Heritage
 {
-    public interface IReadjustment
+    internal class Onix : Car
     {
-        void Readjustment();
+        public Onix() : base(200)
+        {
+        }
     }
 }

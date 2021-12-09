@@ -4,7 +4,6 @@ C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\Metori
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\bin\Debug\net6.0\MetoringCsharp.dll
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\bin\Debug\net6.0\ref\MetoringCsharp.dll
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\bin\Debug\net6.0\MetoringCsharp.pdb
-C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\obj\Debug\net6.0\MetoringCsharp.GlobalUsings.g.cs
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\obj\Debug\net6.0\MetoringCsharp.csproj.AssemblyReference.cache
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\obj\Debug\net6.0\MetoringCsharp.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\MetoringCsharp\obj\Debug\net6.0\MetoringCsharp.AssemblyInfoInputs.cache
