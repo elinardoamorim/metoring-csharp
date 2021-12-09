@@ -89,7 +89,7 @@ namespace Calculator.WebAPI.Controllers
             {
                 decimal value = ConvertToDecimal(number);
                 var squareRoot = Math.Sqrt((double)value);
-                return Ok(squareRoot.ToString("N2"));
+                return Ok(squareRoot.ToString());
             }
             return BadRequest("Invalid Input");
         }
