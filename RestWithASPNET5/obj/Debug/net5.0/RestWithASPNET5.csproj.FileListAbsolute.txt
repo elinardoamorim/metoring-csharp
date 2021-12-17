@@ -66,3 +66,4 @@ C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\RestWi
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\RestWithASPNET5\obj\Debug\net5.0\ref\RestWithASPNET5.dll
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\RestWithASPNET5\obj\Debug\net5.0\RestWithASPNET5.pdb
 C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\RestWithASPNET5\obj\Debug\net5.0\RestWithASPNET5.genruntimeconfig.cache
+C:\Users\Theo\Documents\EstagioLead\project\MetoringCsharp\MetoringCsharp\RestWithASPNET5\obj\Debug\net5.0\RestWithASPNET5.csproj.AssemblyReference.cache

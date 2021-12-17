@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RestWithAPSNET.Models;
-using RestWithAPSNET.Services;
+using RestWithASPNET5.Business;
+using RestWithASPNET5.Models;
 
-namespace RestWithAPSNET.Controllers
+namespace RestWithASPNET5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class PersonController : ControllerBase
     {
-        
         private readonly ILogger<PersonController> _logger;
         private IPersonBusiness _personBusiness;
 

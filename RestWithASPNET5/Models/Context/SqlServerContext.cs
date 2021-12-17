@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestWithASPNET5.Models;
 
-namespace RestWithAPSNET.Models.Context
+namespace RestWithASPNET5.Models.Context
 {
     public class SqlServerContext : DbContext
     {
@@ -10,5 +11,6 @@ namespace RestWithAPSNET.Models.Context
         }
      
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }

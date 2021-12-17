@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RestWithAPSNET.Models.Context;
-using RestWithAPSNET.Services;
-using RestWithAPSNET.Services.Implementations;
-using RestWithASPNET5.Repositories;
-using RestWithASPNET5.Repositories.Implementations;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using RestWithASPNET5.Models.Context;
+using RestWithASPNET5.Business;
+using RestWithASPNET5.Business.Implementations;
+using RestWithASPNET5.Repositories;
+using RestWithASPNET5.Repositories.Implementations;
 
 namespace RestWithASPNET5
 {
@@ -51,7 +51,9 @@ namespace RestWithASPNET5
 
             //Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
 
         }
 
@@ -81,9 +83,10 @@ namespace RestWithASPNET5
                 var evolveConnection = new SqlConnection(connection);
                 var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
                 {
-                    Locations = new List<string> { "db/migrations", "db/dataset" },
+                    Locations = new List<string> {"db/migrations", "db/dataset"},
                     IsEraseDisabled = true
                 };
+                evolve.Migrate();
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
-﻿using RestWithAPSNET.Models;
+﻿using RestWithASPNET5.Models;
 using System.Collections.Generic;
 
-namespace RestWithAPSNET.Services
+namespace RestWithASPNET5.Business
 {
     public interface IPersonBusiness
     {
