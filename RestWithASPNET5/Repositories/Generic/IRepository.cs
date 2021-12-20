@@ -1,7 +1,7 @@
 ﻿using RestWithASPNET5.Models.Base;
 using System.Collections.Generic;
 
-namespace RestWithASPNET5.Repositories.Implementations
+namespace RestWithASPNET5.Repositories.Generic
 {
     public interface IRepository<T> where T : BaseEntity
     {

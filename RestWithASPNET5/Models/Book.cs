@@ -10,7 +10,7 @@ namespace RestWithASPNET5.Models
         [Column("title")]
         public string Title { get; set; }
         [Column("author")]
-        public string author { get; set; }
+        public string Author { get; set; }
         [Column("launch_date")]
         public DateTime LaunchDate { get; set; }
         [Column("price")]

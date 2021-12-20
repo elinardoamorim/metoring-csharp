@@ -6,20 +6,22 @@
 
   <ItemGroup>
     <None Remove="Repositories\IBookRepository.txt" />
-    <None Remove="Repositories\Implementations\BookRepositoryImplementation.txt" />
-    <None Remove="Repositories\Implementations\PersonRepositoryImplementation.txt" />
+    <None Remove="Repositories\Generic\BookRepositoryImplementation.txt" />
+    <None Remove="Repositories\Generic\PersonRepositoryImplementation.txt" />
     <None Remove="Repositories\IPersonRepository.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Repositories\IBookRepository.txt" />
-    <Compile Include="Repositories\Implementations\BookRepositoryImplementation.txt" />
-    <Compile Include="Repositories\Implementations\PersonRepositoryImplementation.txt" />
+    <Compile Include="Repositories\Generic\BookRepositoryImplementation.txt" />
+    <Compile Include="Repositories\Generic\PersonRepositoryImplementation.txt" />
     <Compile Include="Repositories\IPersonRepository.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Evolve" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">

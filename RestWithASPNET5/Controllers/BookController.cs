@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using RestWithASPNET5.Business;
-using RestWithASPNET5.Models;
+using RestWithASPNET5.Data.VO;
 
 namespace RestWithASPNET5.Controllers
 {
@@ -33,7 +32,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookVO book)
         {
             var newBook = _bookBusiness.Create(book);
             if(newBook == null) BadRequest();
@@ -41,7 +40,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book book)
+        public IActionResult Put([FromBody] BookVO book)
         {
             var changeBook = _bookBusiness.Update(book);
             if(changeBook == null) BadRequest();
@@ -51,7 +50,7 @@ namespace RestWithASPNET5.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            Book book = _bookBusiness.FindById(id);
+            BookVO book = _bookBusiness.FindById(id);
             if (book == null) return NotFound();
             _bookBusiness.Delete(id);
             return NoContent();

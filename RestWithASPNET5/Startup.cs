@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using RestWithASPNET5.Models.Context;
 using RestWithASPNET5.Business;
 using RestWithASPNET5.Business.Implementations;
-using RestWithASPNET5.Repositories;
-using RestWithASPNET5.Repositories.Implementations;
+using Microsoft.Net.Http.Headers;
+using RestWithASPNET5.Repositories.Generic;
 
 namespace RestWithASPNET5
 {
@@ -45,6 +45,14 @@ namespace RestWithASPNET5
             {
                 MigrateDataBase(connection);
             }
+
+            services.AddMvc(option =>
+            {
+                option.RespectBrowserAcceptHeader = true;
+                option.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                option.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+            .AddXmlSerializerFormatters();
 
             //Versioning API
             services.AddApiVersioning();
