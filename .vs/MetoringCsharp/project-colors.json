@@ -35,7 +35,27 @@
       "ProjectGuid": "af1bf363-bd2a-4e68-ba6e-24f54ea7aeb9",
       "DisplayName": "Calculator.WebAPI",
       "ColorIndex": 5
+    },
+    "df41d518-2b16-439d-b23b-c1ff2874b8ff": {
+      "ProjectGuid": "df41d518-2b16-439d-b23b-c1ff2874b8ff",
+      "DisplayName": "RestWithAPSNET",
+      "ColorIndex": 6
+    },
+    "6e510786-8f65-4775-aee7-fa8657d92088": {
+      "ProjectGuid": "6e510786-8f65-4775-aee7-fa8657d92088",
+      "DisplayName": "RestWithAPSNET",
+      "ColorIndex": 7
+    },
+    "c1eac305-9f4e-49c6-b47a-3627fd9809cf": {
+      "ProjectGuid": "c1eac305-9f4e-49c6-b47a-3627fd9809cf",
+      "DisplayName": "RestWithASPNET5",
+      "ColorIndex": 8
+    },
+    "70ad0091-b05f-463d-9791-0eabdfae10d4": {
+      "ProjectGuid": "70ad0091-b05f-463d-9791-0eabdfae10d4",
+      "DisplayName": "RestWithAPIMySQL",
+      "ColorIndex": 9
     }
   },
-  "NextColorIndex": 6
+  "NextColorIndex": 10
 }
