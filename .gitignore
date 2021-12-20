@@ -1,1 +1,15 @@
 .vs
+Calculator.WebAPI/bin
+Calculator.WebAPI/obj
+
+EFCore.WebAPI/bin
+EFCore.WebAPI/obj
+
+MetoringCsharp/bin
+MetoringCsharp/obj
+
+RestWithAPIMySQL/bin
+RestWithAPIMySQL/obj
+
+RestWithASPNET5/bin
+RestWithASPNET5/obj
