@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET5.Business;
 using RestWithASPNET5.Data.VO;
+using RestWithASPNET5.Hypermedia.Filters;
+using System.Collections.Generic;
 
 namespace RestWithASPNET5.Controllers
 {
@@ -17,15 +19,22 @@ namespace RestWithASPNET5.Controllers
 
         }
 
+
         [HttpGet]
-        public IActionResult Get()
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public ActionResult<List<PersonVO>> Get()
         {
             var persons = _personBusiness.FindAll();
             return Ok(persons);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(long id)
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<PersonVO> GetById(long id)
         {
             var person = _personBusiness.FindById(id);
             if(person == null) return NotFound();
@@ -33,6 +42,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             var newPerson = _personBusiness.Create(person);
@@ -41,6 +51,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof (HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
             var changePerson = _personBusiness.Update(person);
@@ -48,6 +59,12 @@ namespace RestWithASPNET5.Controllers
             return Ok(changePerson);
         }
 
+
+        /// <summary>
+        /// Deleta o cadastro de uma pessoa.
+        /// </summary>
+        /// <response code="404">Retorna Not Found caso não tenha um usuário com a identificação informada</response>
+        /// <response code="204">Retorna No Content caso a exclusão do usuário informado seja bem sucedida</response>
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {

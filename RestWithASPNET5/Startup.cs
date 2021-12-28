@@ -13,6 +13,10 @@ using RestWithASPNET5.Business;
 using RestWithASPNET5.Business.Implementations;
 using Microsoft.Net.Http.Headers;
 using RestWithASPNET5.Repositories.Generic;
+using System.Reflection;
+using System.IO;
+using RestWithASPNET5.Hypermedia.Filters;
+using RestWithASPNET5.Hypermedia.Enricher;
 
 namespace RestWithASPNET5
 {
@@ -54,6 +58,22 @@ namespace RestWithASPNET5
             })
             .AddXmlSerializerFormatters();
 
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContenResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContenResponseEnricherList.Add(new BookEnricher());
+            services.AddSingleton(filterOptions);
+
+            //Swagger
+            services.AddSwaggerGen(d =>
+            {
+                d.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo{ Title = "Swagger", Version = "v1" });
+                
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                d.IncludeXmlComments(xmlPath);
+            });
+
+
             //Versioning API
             services.AddApiVersioning();
 
@@ -73,6 +93,18 @@ namespace RestWithASPNET5
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger V1");
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -82,6 +114,7 @@ namespace RestWithASPNET5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller}");
             });
         }
         private void MigrateDataBase(string connection)

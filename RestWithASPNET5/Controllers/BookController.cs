@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET5.Business;
 using RestWithASPNET5.Data.VO;
+using RestWithASPNET5.Hypermedia.Filters;
+using System.Collections.Generic;
 
 namespace RestWithASPNET5.Controllers
 {
@@ -17,14 +19,20 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public ActionResult<List<BookVO>> Get()
         {
             var books = _bookBusiness.FindAll();
             return Ok(books);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(long id)
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<BookVO> GetById(long id)
         {
             var book = _bookBusiness.FindById(id);
             if(book == null) return NotFound();
@@ -32,6 +40,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
             var newBook = _bookBusiness.Create(book);
@@ -40,6 +49,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO book)
         {
             var changeBook = _bookBusiness.Update(book);
