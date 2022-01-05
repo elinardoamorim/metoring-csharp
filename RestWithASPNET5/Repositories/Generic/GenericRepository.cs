@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestWithASPNET5.Models;
 using RestWithASPNET5.Models.Base;
 using RestWithASPNET5.Models.Context;
 using System;

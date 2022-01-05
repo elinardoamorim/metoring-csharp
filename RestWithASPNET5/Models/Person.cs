@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithASPNET5.Models
 {
-    [Table("person")]
+    [Table("persons")]
     public class Person : BaseEntity
     {
         [Column("first_name")]

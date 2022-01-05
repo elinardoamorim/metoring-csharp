@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithASPNET5.Models
 {
-    [Table("book")]
+    [Table("books")]
     public class Book : BaseEntity
     {
         [Column("title")]
         public string Title { get; set; }
-        [Column("author")]
-        public string Author { get; set; }
         [Column("launch_date")]
         public DateTime LaunchDate { get; set; }
         [Column("price")]
         public decimal Price { get; set; }
+        [Column("author_id")]
+        public long? AuthorId { get; set; }
+        public Author Author { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET5.Business;
 using RestWithASPNET5.Data.VO;
@@ -8,17 +9,19 @@ namespace RestWithASPNET5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize("Bearer")]
+    [Route("api/v{version:ApiVersion}/persons")]
     public class PersonController : ControllerBase
     {
+        private IGenericBusiness<PersonVO> _crudBusiness;
         private IPersonBusiness _personBusiness;
 
-        public PersonController(IPersonBusiness personBusiness)
+        public PersonController(IGenericBusiness<PersonVO> personCrudBusiness, IPersonBusiness personBusiness)
         {
+            _crudBusiness = personCrudBusiness;
             _personBusiness = personBusiness;
 
         }
-
 
         [HttpGet]
         [TypeFilter(typeof(HyperMediaFilter))]
@@ -28,15 +31,55 @@ namespace RestWithASPNET5.Controllers
         [ProducesResponseType(500)]
         public ActionResult<List<PersonVO>> Get()
         {
-            var persons = _personBusiness.FindAll();
+            var persons = _crudBusiness.FindAll();
             return Ok(persons);
+        }
+
+        [HttpGet("get-by-name")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<List<PersonVO>> GetByName(string name)
+        {
+            var persons = _personBusiness.FindByName(name);
+            if(persons == null) return NotFound();
+            return Ok(persons);
+
+        }
+
+        [HttpGet("get-by-lastname")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<List<PersonVO>> GetByLastName(string lastName)
+        {
+            var persons = _personBusiness.FindByLastName(lastName);
+            if (persons == null) return NotFound();
+            return Ok(persons);
+
+        }
+        
+        [HttpGet("get-by-address")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<List<PersonVO>> GetByAddress(string address)
+        {
+            var persons = _personBusiness.FindByAddress(address);
+            if (persons == null) return NotFound();
+            return Ok(persons);
+
+        }
+        
+        [HttpGet("get-by-gender")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<List<PersonVO>> GetByGender(string gender)
+        {
+            var persons = _personBusiness.FindByGender(gender);
+            if (persons == null) return NotFound();
+            return Ok(persons);
+
         }
 
         [HttpGet("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<PersonVO> GetById(long id)
         {
-            var person = _personBusiness.FindById(id);
+            var person = _crudBusiness.FindById(id);
             if(person == null) return NotFound();
             return Ok(person);
         }
@@ -45,7 +88,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
-            var newPerson = _personBusiness.Create(person);
+            var newPerson = _crudBusiness.Create(person);
             if(newPerson == null) return BadRequest();
             return Ok(newPerson);
         }
@@ -54,7 +97,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof (HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
-            var changePerson = _personBusiness.Update(person);
+            var changePerson = _crudBusiness.Update(person);
             if(changePerson == null) return BadRequest(); 
             return Ok(changePerson);
         }
@@ -68,9 +111,9 @@ namespace RestWithASPNET5.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            PersonVO person = _personBusiness.FindById(id);
+            PersonVO person = _crudBusiness.FindById(id);
             if(person == null) return NotFound();
-            _personBusiness.Delete(id);
+            _crudBusiness.Delete(id);
             return NoContent();
         }
     }

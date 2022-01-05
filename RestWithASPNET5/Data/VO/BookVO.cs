@@ -13,15 +13,15 @@ namespace RestWithASPNET5.Data.VO
         //[XmlElement("title")]
         //[JsonPropertyName("title")]
         public string Title { get; set; }
-        //[XmlElement("author")]
-        //[JsonPropertyName("author")]
-        public string Author { get; set; }
         //[XmlElement("price")]
         //[JsonPropertyName("price")]
         public decimal Price { get; set; }
         //[XmlElement("launch_date")]
         //[JsonPropertyName("lauch_date")]
         public DateTime LaunchDate { get; set; }
+        //[XmlElement("author")]
+        //[JsonPropertyName("author")]
+        public AuthorVO Author { get; set; }
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

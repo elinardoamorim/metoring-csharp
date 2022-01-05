@@ -2,19 +2,22 @@
 using RestWithASPNET5.Business;
 using RestWithASPNET5.Data.VO;
 using RestWithASPNET5.Hypermedia.Filters;
+using System;
 using System.Collections.Generic;
 
 namespace RestWithASPNET5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/books")]
     public class BookController : ControllerBase
     {
+        private IGenericBusiness<BookVO> _crudBusiness;
         private IBookBusiness _bookBusiness;
 
-        public BookController(IBookBusiness bookBusiness)
+        public BookController(IGenericBusiness<BookVO> crudBusiness, IBookBusiness bookBusiness)
         {
+            _crudBusiness = crudBusiness;
             _bookBusiness = bookBusiness;
         }
 
@@ -26,7 +29,7 @@ namespace RestWithASPNET5.Controllers
         [ProducesResponseType(500)]
         public ActionResult<List<BookVO>> Get()
         {
-            var books = _bookBusiness.FindAll();
+            var books = _crudBusiness.FindAll();
             return Ok(books);
         }
 
@@ -34,8 +37,44 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<BookVO> GetById(long id)
         {
-            var book = _bookBusiness.FindById(id);
+            var book = _crudBusiness.FindById(id);
             if(book == null) return NotFound();
+            return Ok(book);
+        }
+
+        [HttpGet("get-by-date")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<BookVO> GetByDateLaunchDate(DateTime dateTime)
+        {
+            var book = _bookBusiness.FindByLaunchDate(dateTime);
+            if (book == null) return NotFound();
+            return Ok(book);
+        }
+        
+        [HttpGet("get-by-title")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<BookVO> GetByDateTitle(string title)
+        {
+            var book = _bookBusiness.FindByTitle(title);
+            if (book == null) return NotFound();
+            return Ok(book);
+        }
+        
+        [HttpGet("get-by-author")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<BookVO> GetByDateAuthor(string author)
+        {
+            var book = _bookBusiness.FindByAuthor(author);
+            if (book == null) return NotFound();
+            return Ok(book);
+        }
+        
+        [HttpGet("get-by-price")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<BookVO> GetByDatePrice(decimal price)
+        {
+            var book = _bookBusiness.FindByPrice(price);
+            if (book == null) return NotFound();
             return Ok(book);
         }
 
@@ -43,7 +82,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
-            var newBook = _bookBusiness.Create(book);
+            var newBook = _crudBusiness.Create(book);
             if(newBook == null) BadRequest();
             return Ok(newBook);
         }
@@ -52,7 +91,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO book)
         {
-            var changeBook = _bookBusiness.Update(book);
+            var changeBook = _crudBusiness.Update(book);
             if(changeBook == null) BadRequest();
             return Ok(changeBook);
         }
@@ -60,9 +99,9 @@ namespace RestWithASPNET5.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            BookVO book = _bookBusiness.FindById(id);
+            BookVO book = _crudBusiness.FindById(id);
             if (book == null) return NotFound();
-            _bookBusiness.Delete(id);
+            _crudBusiness.Delete(id);
             return NoContent();
         }
 

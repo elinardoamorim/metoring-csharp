@@ -15,7 +15,7 @@ namespace RestWithASPNET5.Data.Converter.Implementations
             {
                 Id = origin.Id,
                 Title = origin.Title,
-                Author = origin.Author,
+                Author = new AuthorConverter().Parse(origin.Author),
                 Price = origin.Price,
                 LaunchDate = origin.LaunchDate
             };
@@ -28,7 +28,7 @@ namespace RestWithASPNET5.Data.Converter.Implementations
             {
                 Id = origin.Id,
                 Title = origin.Title,
-                Author = origin.Author,
+                Author = new AuthorConverter().Parse(origin.Author),
                 Price = origin.Price,
                 LaunchDate = origin.LaunchDate
             };

@@ -17,6 +17,19 @@ using System.Reflection;
 using System.IO;
 using RestWithASPNET5.Hypermedia.Filters;
 using RestWithASPNET5.Hypermedia.Enricher;
+using RestWithASPNET5.Data.VO;
+using RestWithASPNET5.Repositories;
+using RestWithASPNET5.Repositories.Implementations;
+using RestWithASPNET5.Configurations;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
+using RestWithASPNET5.Services;
+using RestWithASPNET5.Services.impl;
+using RestWithASPNET5.Repositories.impl;
 
 namespace RestWithASPNET5
 {
@@ -37,6 +50,47 @@ namespace RestWithASPNET5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var tokenConfigurations = new TokenConfiguration();
+
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(
+                Configuration.GetSection("TokenConfiguration"))
+                .Configure(tokenConfigurations);
+
+            services.AddSingleton(tokenConfigurations);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+            .AddJwtBearer(options =>
+           {
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidateLifetime = true,
+                   ValidateIssuerSigningKey = true,
+                   ValidIssuer = tokenConfigurations.Issuer,
+                   ValidAudience = tokenConfigurations.Audience,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
+               };
+           });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
 
             services.AddControllers();
 
@@ -61,12 +115,36 @@ namespace RestWithASPNET5
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContenResponseEnricherList.Add(new PersonEnricher());
             filterOptions.ContenResponseEnricherList.Add(new BookEnricher());
+            filterOptions.ContenResponseEnricherList.Add(new AuthorEnricher());
             services.AddSingleton(filterOptions);
 
             //Swagger
             services.AddSwaggerGen(d =>
             {
                 d.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo{ Title = "Swagger", Version = "v1" });
+
+
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                d.AddSecurityDefinition("Bearer", jwtSecurityScheme);
+                d.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
                 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -79,9 +157,32 @@ namespace RestWithASPNET5
 
             //Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
+            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+
+            services.AddScoped<IAuthorBusiness, AuthorBusinessImplementation>();
+
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+
+            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+
+            services.AddScoped<IAuthorRepository, AuthorRepositoryImplementation>();
+            
+            services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+
+            services.AddScoped<IUserBusiness, UserBusinessImplementation>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddTransient<ITokenService, TokenService>();
+
+            services.AddScoped<IGenericBusiness<PersonVO>, PersonBusinessImplementation>();
+
+            services.AddScoped<IGenericBusiness<BookVO>, BookBusinessImplementation>();
+            
+            services.AddScoped<IGenericBusiness<AuthorVO>, AuthorBusinessImplementation>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
         }
 
@@ -94,6 +195,7 @@ namespace RestWithASPNET5
             }
 
             app.UseSwagger();
+
             app.UseSwaggerUI(option =>
             {
                 option.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger V1");
@@ -108,6 +210,8 @@ namespace RestWithASPNET5
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace RestWithASPNET5.Hypermedia.Enricher
 {
-    public class PersonEnricher : ContentResponseEnricher<PersonVO>
+    public class AuthorEnricher : ContentResponseEnricher<AuthorVO>
     {
         private readonly object _lock = new object();
-        protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
+
+        protected override Task EnrichModel(AuthorVO content, IUrlHelper urlHelper)
         {
-            var path = "api/v1/persons";
+            var path = "api/v1/authors";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
@@ -21,6 +22,7 @@ namespace RestWithASPNET5.Hypermedia.Enricher
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultGet
             });
+
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.POST,
@@ -28,13 +30,14 @@ namespace RestWithASPNET5.Hypermedia.Enricher
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-            content.Links.Add(new HyperMediaLink()
-            {
+
+            content.Links.Add(new HyperMediaLink() {
                 Action = HttpActionVerb.PUT,
                 Href = link,
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPut
             });
+
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.DELETE,
@@ -42,6 +45,7 @@ namespace RestWithASPNET5.Hypermedia.Enricher
                 Rel = RelationType.self,
                 Type = "int"
             });
+
             return null;
         }
 

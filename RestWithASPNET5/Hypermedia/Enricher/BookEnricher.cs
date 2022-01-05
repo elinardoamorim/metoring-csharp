@@ -11,7 +11,7 @@ namespace RestWithASPNET5.Hypermedia.Enricher
         private readonly object _lock = new object();
         protected override Task EnrichModel(BookVO content, IUrlHelper urlHelper)
         {
-            var path = "api/v1/book";
+            var path = "api/v1/books";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
