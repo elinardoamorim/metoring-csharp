@@ -12,12 +12,10 @@ namespace RestWithASPNET5.Controllers
     [Route("api/v{version:apiVersion}/books")]
     public class BookController : ControllerBase
     {
-        private IGenericBusiness<BookVO> _crudBusiness;
         private IBookBusiness _bookBusiness;
 
-        public BookController(IGenericBusiness<BookVO> crudBusiness, IBookBusiness bookBusiness)
+        public BookController(IBookBusiness bookBusiness)
         {
-            _crudBusiness = crudBusiness;
             _bookBusiness = bookBusiness;
         }
 
@@ -27,17 +25,16 @@ namespace RestWithASPNET5.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
-        public ActionResult<List<BookVO>> Get()
+        public ActionResult<List<BookVO>> GetAll()
         {
-            var books = _crudBusiness.FindAll();
+            var books = _bookBusiness.FindAll();
             return Ok(books);
         }
 
         [HttpGet("{id}")]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<BookVO> GetById(long id)
         {
-            var book = _crudBusiness.FindById(id);
+            var book = _bookBusiness.FindById(id);
             if(book == null) return NotFound();
             return Ok(book);
         }
@@ -80,28 +77,30 @@ namespace RestWithASPNET5.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Post([FromBody] BookVO book)
+        public IActionResult Post([FromBody] BookResumeVO book)
         {
-            var newBook = _crudBusiness.Create(book);
+            book.LaunchDate = DateTime.Now;
+            var newBook = _bookBusiness.Create(book);
             if(newBook == null) BadRequest();
-            return Ok(newBook);
+            return CreatedAtAction("GetbyId", new { id = newBook.Id }, newBook);
         }
 
         [HttpPut]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Put([FromBody] BookVO book)
+        public IActionResult Put(long id, [FromBody] BookResumeVO book)
         {
-            var changeBook = _crudBusiness.Update(book);
-            if(changeBook == null) BadRequest();
-            return Ok(changeBook);
+            book.LaunchDate = DateTime.Now;
+            var newBook = _bookBusiness.Update(id, book);
+            if(newBook == null) BadRequest();
+            return Ok(newBook);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            BookVO book = _crudBusiness.FindById(id);
+            BookVO book = _bookBusiness.FindById(id);
             if (book == null) return NotFound();
-            _crudBusiness.Delete(id);
+            _bookBusiness.Delete(id);
             return NoContent();
         }
 

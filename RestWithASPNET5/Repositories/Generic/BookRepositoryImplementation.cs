@@ -18,8 +18,7 @@ namespace RestWithASPNET5.Repositories.Implementations
 
         public List<Book> FindByAuthor(string author)
         {
-            //var booksAuthor = _context.Books.Include(b => b.Author).Where(authors => authors.Author.Name.ToLower().Contains(author.ToLower())).ToList();
-            var books = _context.Books.Include(b => b.Author).ToList();
+            var books = _context.Books.Include(b => b.Author).Where(authors => authors.Author.Name.ToLower().Contains(author.ToLower())).ToList();
             if (books == null) return null;
             return books;
         }
@@ -40,9 +39,58 @@ namespace RestWithASPNET5.Repositories.Implementations
 
         public List<Book> FindByTitle(string title)
         {
-            var booksTitle = _context.Books.Where(titles => titles.Title.ToLower().Contains(title.ToLower())).ToList();
-            if (booksTitle != null) return booksTitle;
-            return null;
+            var books = _context.Books.Include(a => a.Author).Where(titles => titles.Title.ToLower().Contains(title.ToLower())).ToList();
+            if (books == null) return null;
+            return books;
         }
+
+        public Book FindById(long id)
+        {
+            var book = _context.Books.Include(a => a.Author).Where(b => b.Id.Equals(id)).FirstOrDefault();
+            if(book == null) return null;
+            return book;
+        }
+
+        public List<Book> FindAll()
+        {
+            var books = _context.Books.Include(a => a.Author).ToList();
+            if(books == null) return null;
+            return books;
+        }
+
+        public Book Create(Book book)
+        {
+            try
+            {
+                _context.Books.Add(book);
+                _context.SaveChanges();
+            } 
+            catch(Exception)
+            {
+                throw;
+            }
+            return FindById(book.Id);
+        }
+
+        public Book Update(long id, Book book)
+        {
+            var result = _context.Books.Include(a => a.Author).SingleOrDefault(p => p.Id.Equals(id));
+            book.Id = id;
+            if(result != null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(book);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+            return result;
+        }
+
     }
 }

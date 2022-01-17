@@ -47,11 +47,14 @@ namespace RestWithASPNET5.Repositories.impl
 
         public bool RevokeToken(string login)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Login.Equals(login));
-            if (user == null) return false;
+            var result = _context.Users.SingleOrDefault(u => u.Login.Equals(login));
+            if (result == null) return false;
 
+            User user = result;
             user.RefreshToken = null;
-            user.Password = null;
+            user.Password = ComputeHash(user.Password, new SHA256CryptoServiceProvider());
+
+            _context.Entry(result).CurrentValues.SetValues(user);
             _context.SaveChanges();
             return true;
         }

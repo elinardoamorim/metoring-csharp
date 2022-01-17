@@ -16,7 +16,8 @@ namespace RestWithASPNET5.Data.Converter.Implementations
                 Id = origin.Id,
                 CPF = origin.CPF,
                 Name = origin.Name,
-                LastName = origin.LastName
+                LastName = origin.LastName,
+                Books = new BookAuthorConverter().Parse(origin.Books)
             };
         }
 
@@ -34,7 +35,8 @@ namespace RestWithASPNET5.Data.Converter.Implementations
                 Id = origin.Id,
                 CPF = origin.CPF,
                 Name = origin.Name,
-                LastName = origin.LastName
+                LastName = origin.LastName,
+                Books = new BookAuthorConverter().Parse(origin.Books)
             };
         }
 

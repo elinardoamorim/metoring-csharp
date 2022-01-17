@@ -18,7 +18,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] UserVO user)
+        public ActionResult<UserVO> Create([FromBody] UserVO user)
         {
             if(user == null) return BadRequest("Invalid user request");
             if (!_userBusiness.Create(user)) return BadRequest("Failed to register the user");

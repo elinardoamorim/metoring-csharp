@@ -13,12 +13,12 @@ namespace RestWithASPNET5.Controllers
     [Route("api/v{version:ApiVersion}/persons")]
     public class PersonController : ControllerBase
     {
-        private IGenericBusiness<PersonVO> _crudBusiness;
+        private IGenericBusiness<PersonVO> _generic;
         private IPersonBusiness _personBusiness;
 
         public PersonController(IGenericBusiness<PersonVO> personCrudBusiness, IPersonBusiness personBusiness)
         {
-            _crudBusiness = personCrudBusiness;
+            _generic = personCrudBusiness;
             _personBusiness = personBusiness;
 
         }
@@ -31,7 +31,7 @@ namespace RestWithASPNET5.Controllers
         [ProducesResponseType(500)]
         public ActionResult<List<PersonVO>> Get()
         {
-            var persons = _crudBusiness.FindAll();
+            var persons = _generic.FindAll();
             return Ok(persons);
         }
 
@@ -79,7 +79,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<PersonVO> GetById(long id)
         {
-            var person = _crudBusiness.FindById(id);
+            var person = _generic.FindById(id);
             if(person == null) return NotFound();
             return Ok(person);
         }
@@ -88,7 +88,7 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
-            var newPerson = _crudBusiness.Create(person);
+            var newPerson = _generic.Create(person);
             if(newPerson == null) return BadRequest();
             return Ok(newPerson);
         }
@@ -97,8 +97,8 @@ namespace RestWithASPNET5.Controllers
         [TypeFilter(typeof (HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
-            var changePerson = _crudBusiness.Update(person);
-            if(changePerson == null) return BadRequest(); 
+            var changePerson = _generic.Update(person);
+            if(changePerson == null) return BadRequest("Invalid person"); 
             return Ok(changePerson);
         }
 
@@ -111,9 +111,9 @@ namespace RestWithASPNET5.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            PersonVO person = _crudBusiness.FindById(id);
+            PersonVO person = _generic.FindById(id);
             if(person == null) return NotFound();
-            _crudBusiness.Delete(id);
+            _generic.Delete(id);
             return NoContent();
         }
     }

@@ -6,7 +6,7 @@ namespace RestWithASPNET5.Repositories.Generic
     public interface IRepository<T> where T : BaseEntity
     {
         T Create(T t);
-        T FindByID(long id);
+        T FindById(long id);
         List<T> FindAll();
         T Update (T t);
         void Delete(long id);

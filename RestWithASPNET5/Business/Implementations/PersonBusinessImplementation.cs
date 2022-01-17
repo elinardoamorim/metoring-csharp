@@ -43,7 +43,7 @@ namespace RestWithASPNET5.Business.Implementations
 
         public PersonVO FindById(long id)
         {
-            return _converter.Parse(_repository.FindByID(id));
+            return _converter.Parse(_repository.FindById(id));
         }
 
         public PersonVO Update(PersonVO person)

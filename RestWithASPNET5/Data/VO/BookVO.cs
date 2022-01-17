@@ -21,7 +21,7 @@ namespace RestWithASPNET5.Data.VO
         public DateTime LaunchDate { get; set; }
         //[XmlElement("author")]
         //[JsonPropertyName("author")]
-        public AuthorVO Author { get; set; }
+        public AuthorBookVO Author { get; set; }
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

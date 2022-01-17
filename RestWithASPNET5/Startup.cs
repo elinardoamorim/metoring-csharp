@@ -115,13 +115,13 @@ namespace RestWithASPNET5
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContenResponseEnricherList.Add(new PersonEnricher());
             filterOptions.ContenResponseEnricherList.Add(new BookEnricher());
-            filterOptions.ContenResponseEnricherList.Add(new AuthorEnricher());
+            //filterOptions.ContenResponseEnricherList.Add(new AuthorEnricher());
             services.AddSingleton(filterOptions);
 
             //Swagger
             services.AddSwaggerGen(d =>
             {
-                d.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo{ Title = "Swagger", Version = "v1" });
+                d.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Swagger", Version = "v1" });
 
 
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -145,7 +145,7 @@ namespace RestWithASPNET5
                 {
                     { jwtSecurityScheme, Array.Empty<string>() }
                 });
-                
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 d.IncludeXmlComments(xmlPath);
@@ -167,7 +167,7 @@ namespace RestWithASPNET5
             services.AddScoped<IBookRepository, BookRepositoryImplementation>();
 
             services.AddScoped<IAuthorRepository, AuthorRepositoryImplementation>();
-            
+
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
 
             services.AddScoped<IUserBusiness, UserBusinessImplementation>();
@@ -178,8 +178,6 @@ namespace RestWithASPNET5
 
             services.AddScoped<IGenericBusiness<PersonVO>, PersonBusinessImplementation>();
 
-            services.AddScoped<IGenericBusiness<BookVO>, BookBusinessImplementation>();
-            
             services.AddScoped<IGenericBusiness<AuthorVO>, AuthorBusinessImplementation>();
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
@@ -228,7 +226,7 @@ namespace RestWithASPNET5
                 var evolveConnection = new SqlConnection(connection);
                 var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
                 {
-                    Locations = new List<string> {"db/migrations", "db/dataset"},
+                    Locations = new List<string> { "db/migrations", "db/dataset" },
                     IsEraseDisabled = true
                 };
                 evolve.Migrate();

@@ -11,25 +11,23 @@ namespace RestWithASPNET5.Controllers
     [Route("api/v{version:ApiVersion}/authors")]
     public class AuthorController : ControllerBase
     {
-        private IGenericBusiness<AuthorVO> _crudBusiness;
+        private IGenericBusiness<AuthorVO> _generic;
         private IAuthorBusiness _authorBusiness;
 
         public AuthorController(IGenericBusiness<AuthorVO> crudBusiness, IAuthorBusiness authorBusiness)
         {
-            _crudBusiness = crudBusiness;
+            _generic = crudBusiness;
             _authorBusiness = authorBusiness;
         }
 
         [HttpGet]
-        [TypeFilter(typeof(HyperMediaFilter))]
-        public ActionResult<List<AuthorVO>> Get()
+        public ActionResult<List<AuthorVO>> GetAll()
         {
-            var authors = _crudBusiness.FindAll();
+            var authors = _authorBusiness.FindAll();
             return Ok(authors);
         }
 
         [HttpGet("get-by-name")]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<List<AuthorVO>> GetByFullName(string nameFull)
         {
             var authors = _authorBusiness.FindByFullName(nameFull);
@@ -38,7 +36,6 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpGet("get-by-cpf")]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult GetByCPF(string cpf)
         {
             var author = _authorBusiness.FindByCPF(cpf);
@@ -47,39 +44,35 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpGet("{id}")]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult GetById(long id)
         {
-            var author = _crudBusiness.FindById(id);
+            var author = _authorBusiness.FindById(id);
             if (author == null) return NotFound("Invalid id");
             return Ok(author);
         }
 
         [HttpPost]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] AuthorVO author)
         {
-            var newAuthor = _crudBusiness.Create(author);
+            var newAuthor = _generic.Create(author);
             if (newAuthor == null) return BadRequest();
             return Ok(newAuthor);
         }
         
         [HttpPut]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] AuthorVO author)
         {
-            var changeAuthor =  _crudBusiness.Update(author);
+            var changeAuthor =  _generic.Update(author);
             if(changeAuthor == null) return BadRequest();
             return Ok(changeAuthor);
         }
 
         [HttpDelete("{id}")]
-        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(long id)
         {
-            AuthorVO author = _crudBusiness.FindById(id);
+            AuthorVO author = _generic.FindById(id);
             if (author == null) return NotFound("Invalid id");
-            _crudBusiness.Delete(id);
+            _generic.Delete(id);
             return NoContent();
         }
     }

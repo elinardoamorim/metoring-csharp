@@ -54,7 +54,7 @@ namespace RestWithASPNET5.Repositories.Generic
             return dataset.ToList();
         }
 
-        public T FindByID(long id)
+        public T FindById(long id)
         {
             return dataset.SingleOrDefault(p => p.Id.Equals(id));
         }

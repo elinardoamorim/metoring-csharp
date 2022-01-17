@@ -12,6 +12,8 @@ namespace RestWithASPNET5.Business.Implementations
         private readonly IRepository<Author> _repository;
         private readonly IAuthorRepository _authorRepository;
         private readonly AuthorConverter _converter;
+        private readonly BookAuthorConverter _bookAuthorConverter;
+
 
         public AuthorBusinessImplementation(IRepository<Author> repository, IAuthorRepository authorRepository)
         {
@@ -34,11 +36,11 @@ namespace RestWithASPNET5.Business.Implementations
 
         public List<AuthorVO> FindAll()
         {
-            return _converter.Parse(_repository.FindAll());
+            return _converter.Parse(_authorRepository.FindAll());
         }
         public AuthorVO FindById(long id)
         {
-            return _converter.Parse(_repository.FindByID(id));
+            return _converter.Parse(_authorRepository.FindById(id));
         }
         public AuthorVO Update(AuthorVO t)
         {
@@ -56,7 +58,5 @@ namespace RestWithASPNET5.Business.Implementations
         {
             return _converter.Parse(_authorRepository.FindByFullName(nameFull));
         }
-
-
     }
 }

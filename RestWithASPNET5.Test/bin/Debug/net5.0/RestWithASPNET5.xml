@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RestWithASPNET5</name>
+    </assembly>
+    <members>
+        <member name="M:RestWithASPNET5.Controllers.PersonController.Delete(System.Int64)">
+            <summary>
+            Deleta o cadastro de uma pessoa.
+            </summary>
+            <response code="404">Retorna Not Found caso não tenha um usuário com a identificação informada</response>
+            <response code="204">Retorna No Content caso a exclusão do usuário informado seja bem sucedida</response>
+        </member>
+    </members>
+</doc>
